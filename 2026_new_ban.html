@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="fr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>📲 𝗝𝗢𝗞𝗘𝗥 - 𝗕𝗔𝗡 - 𝗠𝗘𝗧𝗛𝗢𝗗 🩸</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b1a2f;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 30% 40%, rgba(18, 40, 70, 0.3) 0%, transparent 60%);
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.ban-mode {
+            background: #0f0a0a;
+            background-image: radial-gradient(circle at 30% 40%, rgba(200, 40, 20, 0.25) 0%, transparent 60%);
+        }
+
+        /* ========== ANIMATIONS PRO ========== */
+        @keyframes particleDrift {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+        }
+
+        @keyframes scanLine {
+            0% { top: -2px; opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { top: calc(100% + 2px); opacity: 0; }
+        }
+
+        @keyframes dataStream {
+            0% { transform: translateX(-100%); opacity: 0; }
+            20% { opacity: 0.15; }
+            80% { opacity: 0.15; }
+            100% { transform: translateX(400%); opacity: 0; }
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes banGlow {
+            0% { 
+                text-shadow: 0 0 8px rgba(46, 204, 113, 0.4), 0 0 15px rgba(46, 204, 113, 0.2); 
+                filter: brightness(1);
+            }
+            20% { 
+                text-shadow: 0 0 18px rgba(46, 204, 113, 0.8), 0 0 30px rgba(46, 204, 113, 0.4), 0 0 45px rgba(46, 204, 113, 0.15); 
+                filter: brightness(1.3);
+            }
+            40% { 
+                text-shadow: 0 0 10px rgba(52, 152, 219, 0.6), 0 0 20px rgba(52, 152, 219, 0.3); 
+                filter: brightness(1.1);
+            }
+            60% { 
+                text-shadow: 0 0 22px rgba(46, 204, 113, 0.9), 0 0 35px rgba(46, 204, 113, 0.5), 0 0 55px rgba(46, 204, 113, 0.2); 
+                filter: brightness(1.4);
+            }
+            80% { 
+                text-shadow: 0 0 12px rgba(52, 152, 219, 0.7), 0 0 25px rgba(52, 152, 219, 0.35); 
+                filter: brightness(1.15);
+            }
+            100% { 
+                text-shadow: 0 0 8px rgba(46, 204, 113, 0.4), 0 0 15px rgba(46, 204, 113, 0.2); 
+                filter: brightness(1);
+            }
+        }
+
+        @keyframes unbanGlow {
+            0% { 
+                text-shadow: 0 0 8px rgba(52, 152, 219, 0.4), 0 0 15px rgba(52, 152, 219, 0.2); 
+                filter: brightness(1);
+            }
+            25% { 
+                text-shadow: 0 0 20px rgba(52, 152, 219, 0.8), 0 0 30px rgba(52, 152, 219, 0.4), 0 0 50px rgba(52, 152, 219, 0.15); 
+                filter: brightness(1.35);
+            }
+            50% { 
+                text-shadow: 0 0 10px rgba(46, 204, 113, 0.6), 0 0 20px rgba(46, 204, 113, 0.3); 
+                filter: brightness(1.1);
+            }
+            75% { 
+                text-shadow: 0 0 22px rgba(52, 152, 219, 0.9), 0 0 35px rgba(52, 152, 219, 0.5), 0 0 55px rgba(52, 152, 219, 0.2); 
+                filter: brightness(1.4);
+            }
+            100% { 
+                text-shadow: 0 0 8px rgba(52, 152, 219, 0.4), 0 0 15px rgba(52, 152, 219, 0.2); 
+                filter: brightness(1);
+            }
+        }
+
+        @keyframes banGlowRed {
+            0% { 
+                text-shadow: 0 0 8px rgba(231, 76, 60, 0.5), 0 0 15px rgba(231, 76, 60, 0.3); 
+                filter: brightness(1);
+            }
+            20% { 
+                text-shadow: 0 0 20px rgba(255, 60, 40, 0.9), 0 0 35px rgba(255, 60, 40, 0.5), 0 0 50px rgba(255, 40, 20, 0.2); 
+                filter: brightness(1.4);
+            }
+            40% { 
+                text-shadow: 0 0 12px rgba(255, 100, 80, 0.7), 0 0 22px rgba(255, 80, 60, 0.4); 
+                filter: brightness(1.2);
+            }
+            60% { 
+                text-shadow: 0 0 25px rgba(255, 50, 30, 1), 0 0 40px rgba(255, 50, 30, 0.6), 0 0 60px rgba(255, 30, 10, 0.25); 
+                filter: brightness(1.5);
+            }
+            80% { 
+                text-shadow: 0 0 15px rgba(255, 90, 70, 0.8), 0 0 28px rgba(255, 70, 50, 0.4); 
+                filter: brightness(1.2);
+            }
+            100% { 
+                text-shadow: 0 0 8px rgba(231, 76, 60, 0.5), 0 0 15px rgba(231, 76, 60, 0.3); 
+                filter: brightness(1);
+            }
+        }
+
+        @keyframes banBgPulse {
+            0%, 100% { 
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+                border-color: rgba(200, 40, 40, 0.4);
+            }
+            50% { 
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(231, 76, 60, 0.3), 0 0 60px rgba(231, 76, 60, 0.1);
+                border-color: rgba(231, 76, 60, 0.7);
+            }
+        }
+
+        @keyframes separatorBrillance {
+            0% { 
+                box-shadow: 0 0 5px rgba(46, 204, 113, 0.3), 0 0 10px rgba(52, 152, 219, 0.2);
+                background: #2a405a;
+            }
+            50% { 
+                box-shadow: 0 0 15px rgba(46, 204, 113, 0.6), 0 0 25px rgba(52, 152, 219, 0.4);
+                background: #3a5580;
+            }
+            100% { 
+                box-shadow: 0 0 5px rgba(46, 204, 113, 0.3), 0 0 10px rgba(52, 152, 219, 0.2);
+                background: #2a405a;
+            }
+        }
+
+        @keyframes separatorBrillanceRed {
+            0% { 
+                box-shadow: 0 0 5px rgba(231, 76, 60, 0.3), 0 0 10px rgba(200, 40, 40, 0.2);
+                background: #5a2a2a;
+            }
+            50% { 
+                box-shadow: 0 0 15px rgba(231, 76, 60, 0.7), 0 0 25px rgba(200, 40, 40, 0.5);
+                background: #7a3030;
+            }
+            100% { 
+                box-shadow: 0 0 5px rgba(231, 76, 60, 0.3), 0 0 10px rgba(200, 40, 40, 0.2);
+                background: #5a2a2a;
+            }
+        }
+
+        @keyframes versionPulse {
+            0% { 
+                border-color: rgba(231, 76, 60, 0.3);
+                box-shadow: 0 0 5px rgba(231, 76, 60, 0.15), 0 0 10px rgba(231, 76, 60, 0.05);
+                color: #8899bb;
+                text-shadow: none;
+            }
+            30% { 
+                border-color: rgba(231, 76, 60, 0.8);
+                box-shadow: 0 0 15px rgba(231, 76, 60, 0.5), 0 0 25px rgba(231, 76, 60, 0.2), 0 0 40px rgba(231, 76, 60, 0.1);
+                color: #e8b0b0;
+                text-shadow: 0 0 8px rgba(231, 76, 60, 0.6);
+            }
+            60% { 
+                border-color: rgba(231, 76, 60, 0.5);
+                box-shadow: 0 0 10px rgba(231, 76, 60, 0.3), 0 0 18px rgba(231, 76, 60, 0.1);
+                color: #c09595;
+                text-shadow: 0 0 4px rgba(231, 76, 60, 0.3);
+            }
+            100% { 
+                border-color: rgba(231, 76, 60, 0.3);
+                box-shadow: 0 0 5px rgba(231, 76, 60, 0.15), 0 0 10px rgba(231, 76, 60, 0.05);
+                color: #8899bb;
+                text-shadow: none;
+            }
+        }
+
+        @keyframes borderGlowPro {
+            0% { border-color: rgba(46, 204, 113, 0.3); }
+            50% { border-color: rgba(46, 204, 113, 0.6); }
+            100% { border-color: rgba(46, 204, 113, 0.3); }
+        }
+
+        @keyframes borderGlowProRed {
+            0% { border-color: rgba(231, 76, 60, 0.3); }
+            50% { border-color: rgba(255, 50, 30, 0.7); }
+            100% { border-color: rgba(231, 76, 60, 0.3); }
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(2px); }
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { transform: scale(1); opacity: 0.02; }
+            50% { transform: scale(1.1); opacity: 0.04; }
+        }
+
+        @keyframes bgPulseRed {
+            0%, 100% { transform: scale(1); opacity: 0.04; }
+            50% { transform: scale(1.15); opacity: 0.08; }
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .error-shake {
+            animation: errorShake 0.4s ease;
+            border-color: #e74c3c !important;
+            box-shadow: 0 0 0 1px rgba(231, 76, 60, 0.4) !important;
+        }
+
+        .top-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #08121e;
+            border-bottom: 1px solid rgba(46, 204, 113, 0.15);
+            padding: 16px 0 12px 0;
+            z-index: 1000;
+            text-align: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .top-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.3), transparent);
+            animation: scanLine 3s linear infinite;
+            transition: all 0.8s ease;
+        }
+
+        body.ban-mode .top-header {
+            background: #0f0505;
+            border-bottom: 1px solid rgba(231, 76, 60, 0.4);
+        }
+        body.ban-mode .top-header::after {
+            background: linear-gradient(90deg, transparent, rgba(231, 76, 60, 0.4), transparent);
+        }
+
+        .header-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0 24px;
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #d0dce8;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: subtlePulse 3s infinite;
+        }
+
+        body.ban-mode .site-title {
+            color: #e8c8c8;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
+        }
+
+        .site-title span {
+            font-size: 1.6rem;
+            display: inline-block;
+        }
+
+        .server-badge {
+            background: #0a1625;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 400;
+            font-family: monospace;
+            color: #8899bb;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            animation: versionPulse 2.5s infinite;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .server-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(231, 76, 60, 0.08), transparent);
+            animation: dataStream 3s infinite;
+        }
+
+        body.ban-mode .server-badge {
+            background: #1a0808;
+            border-color: rgba(231, 76, 60, 0.7);
+            color: #e8b0b0;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+
+        @media (max-width: 550px) {
+            .header-inner { padding: 0 16px; }
+            .site-title { font-size: 1.2rem; }
+            .server-badge { font-size: 0.65rem; padding: 4px 10px; }
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            margin-top: 90px;
+        }
+
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.03;
+            animation: bgPulse 8s infinite;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bg-circle:nth-child(1) { width: 280px; height: 280px; background: #2ecc71; top: -60px; left: -40px; }
+        .bg-circle:nth-child(2) { width: 220px; height: 220px; background: #3498db; bottom: -50px; right: -30px; animation-delay: 2s; }
+        .bg-circle:nth-child(3) { width: 150px; height: 150px; background: #2ecc71; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s; }
+
+        body.ban-mode .bg-circle:nth-child(1) { background: #e74c3c; opacity: 0.06; animation: bgPulseRed 4s infinite; }
+        body.ban-mode .bg-circle:nth-child(2) { background: #c0392b; opacity: 0.05; animation: bgPulseRed 4s infinite; }
+        body.ban-mode .bg-circle:nth-child(3) { background: #e74c3c; opacity: 0.07; animation: bgPulseRed 4s infinite; }
+
+        .app-screen {
+            width: 100%;
+            background: #0d1f35;
+            border-radius: 36px;
+            padding: 36px 26px 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            position: relative;
+            z-index: 2;
+            animation: borderGlowPro 3s infinite;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .app-screen::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.03), transparent);
+            animation: dataStream 4s infinite;
+            pointer-events: none;
+            transition: all 0.8s ease;
+        }
+
+        body.ban-mode .app-screen {
+            background: #1a0f0f;
+            border-color: rgba(200, 40, 40, 0.4);
+            animation: banBgPulse 2s infinite, borderGlowProRed 2s infinite;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(231, 76, 60, 0.2);
+        }
+        body.ban-mode .app-screen::after {
+            background: linear-gradient(90deg, transparent, rgba(231, 76, 60, 0.04), transparent);
+        }
+
+        .greeting-container { text-align: center; }
+
+        .main-title {
+            font-size: clamp(1.6rem, 9vw, 2.4rem);
+            font-weight: 500;
+            color: #dce6f0;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: floatUpDown 4s infinite;
+        }
+
+        body.ban-mode .main-title {
+            color: #e8d0d0;
+        }
+
+        .main-title .highlight {
+            display: inline-block;
+        }
+        .main-title .highlight:first-child { 
+            color: #2ecc71; 
+            animation: banGlow 3s infinite, floatUpDown 2s infinite; 
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .main-title .highlight:last-child { 
+            color: #3498db; 
+            animation: unbanGlow 3s infinite, floatUpDown 2s infinite; 
+            animation-delay: 0.5s, 0.2s; 
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.ban-mode .main-title .highlight:first-child { 
+            color: #ff4030; 
+            animation: banGlowRed 2s infinite, floatUpDown 1.5s infinite; 
+        }
+        body.ban-mode .main-title .highlight:last-child { 
+            color: #ff4030; 
+            animation: banGlowRed 2s infinite, floatUpDown 1.5s infinite; 
+            animation-delay: 0.3s, 0.15s;
+        }
+
+        .sub-title {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            color: #8899bb;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: subtlePulse 2.5s infinite;
+        }
+
+        body.ban-mode .sub-title {
+            color: #c08080;
+            text-shadow: 0 0 8px rgba(231, 76, 60, 0.4);
+        }
+
+        .form-container { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .input-label, .select-label { 
+            font-size: 0.75rem; 
+            color: #6a85a5; 
+            padding-left: 8px; 
+            font-weight: 450; 
+            letter-spacing: 0.04em; 
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.ban-mode .input-label, body.ban-mode .select-label { 
+            color: #b08080; 
+        }
+
+        .input-field, .select-field {
+            width: 100%;
+            background: #0f2340;
+            border: 1px solid rgba(30, 60, 100, 0.5);
+            border-radius: 16px;
+            padding: 14px 16px;
+            color: #c8ddf0;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            animation: borderGlowPro 4s infinite;
+        }
+
+        body.ban-mode .input-field, body.ban-mode .select-field {
+            background: #1a0f15;
+            border-color: rgba(200, 40, 40, 0.4);
+            color: #e8c8c8;
+            animation: borderGlowProRed 2.5s infinite;
+        }
+
+        .select-field {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%236a85a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 14px;
+            cursor: pointer;
+        }
+
+        body.ban-mode .select-field {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%23c08080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+        }
+
+        .input-field:focus, .select-field:focus {
+            border-color: rgba(46, 204, 113, 0.5);
+            box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
+        }
+
+        body.ban-mode .input-field:focus, body.ban-mode .select-field:focus {
+            border-color: rgba(231, 76, 60, 0.6);
+            box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.15);
+        }
+
+        .input-field::placeholder {
+            color: #4a6585;
+            font-weight: 350;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.ban-mode .input-field::placeholder {
+            color: #805050;
+        }
+
+        .send-btn {
+            width: 100%;
+            background: #15304a;
+            border: 1px solid rgba(46, 204, 113, 0.4);
+            border-radius: 28px;
+            padding: 13px;
+            color: #d0dce8;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            animation: floatUpDown 3s infinite;
+        }
+        .send-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .send-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        .send-btn:hover {
+            background: #1a3a58;
+            border-color: rgba(46, 204, 113, 0.6);
+        }
+        .send-btn:active {
+            transform: scale(0.98);
+        }
+
+        body.ban-mode .send-btn {
+            background: #2a1015;
+            border-color: rgba(231, 76, 60, 0.5);
+            color: #e8c8c8;
+            animation: floatUpDown 2s infinite;
+        }
+        body.ban-mode .send-btn:hover {
+            background: #3a1520;
+            border-color: rgba(231, 76, 60, 0.8);
+            box-shadow: 0 0 25px rgba(231, 76, 60, 0.3);
+        }
+
+        .method-buttons-row { display: flex; gap: 10px; width: 100%; }
+        .method-btn {
+            flex: 1;
+            background: #0f2340;
+            border: 1px solid rgba(30, 60, 100, 0.5);
+            border-radius: 20px;
+            padding: 11px 8px;
+            color: #a0b8d0;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.85rem;
+            font-family: inherit;
+            font-weight: 450;
+            animation: floatUpDown 3.5s infinite;
+        }
+        .method-btn:hover {
+            background: #132a44;
+            border-color: rgba(46, 204, 113, 0.5);
+            color: #c8ddf0;
+        }
+
+        body.ban-mode .method-btn {
+            background: #1a0f15;
+            border-color: rgba(200, 40, 40, 0.4);
+            color: #c8a0a0;
+        }
+        body.ban-mode .method-btn:hover {
+            background: #2a1520;
+            border-color: rgba(231, 76, 60, 0.6);
+            color: #e8c8c8;
+        }
+
+        .separator { 
+            width: 60px; 
+            height: 1px; 
+            background: #2a405a; 
+            margin: 6px 0; 
+            opacity: 0.6; 
+            animation: separatorBrillance 3s infinite;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.ban-mode .separator {
+            background: #5a2a2a;
+            animation: separatorBrillanceRed 2s infinite;
+        }
+
+        .footer-note {
+            font-size: 0.65rem;
+            text-align: center;
+            margin-top: 12px;
+            color: #4a6585;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: subtlePulse 4s infinite;
+        }
+
+        body.ban-mode .footer-note {
+            color: #805050;
+            text-shadow: 0 0 6px rgba(231, 76, 60, 0.3);
+        }
+
+        .hidden { display: none; }
+
+        .floating-social-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 22px;
+            width: 44px;
+            height: 44px;
+            background: #0f1a2a;
+            border: 1.5px solid rgba(46, 204, 113, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+            animation: floatUpDown 2.5s infinite;
+        }
+        .floating-social-btn:hover {
+            background: #152535;
+            border-color: rgba(46, 204, 113, 0.6);
+        }
+
+        body.ban-mode .floating-social-btn {
+            background: #1a0f0f;
+            border-color: rgba(231, 76, 60, 0.5);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 20px rgba(231, 76, 60, 0.2);
+        }
+        body.ban-mode .floating-social-btn:hover {
+            background: #2a1010;
+            border-color: rgba(231, 76, 60, 0.8);
+        }
+
+        .floating-social-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #6a95b5;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .floating-social-btn.active svg {
+            transform: rotate(45deg);
+            fill: #a0c8e0;
+        }
+
+        body.ban-mode .floating-social-btn svg {
+            fill: #c08080;
+        }
+        body.ban-mode .floating-social-btn.active svg {
+            fill: #e8b0b0;
+        }
+
+        .social-popup {
+            position: fixed;
+            bottom: 135px;
+            right: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(15px);
+            transition: 0.25s;
+        }
+        .social-popup.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .social-icon-popup {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #0f1a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(30, 60, 100, 0.5);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .social-icon-popup:hover {
+            background: #152535;
+            border-color: rgba(46, 204, 113, 0.5);
+        }
+
+        body.ban-mode .social-icon-popup {
+            background: #1a0f0f;
+            border-color: rgba(200, 40, 40, 0.4);
+        }
+        body.ban-mode .social-icon-popup:hover {
+            background: #2a1010;
+            border-color: rgba(231, 76, 60, 0.6);
+        }
+
+        .social-icon-popup svg { width: 19px; height: 19px; }
+        .social-icon-popup.whatsapp svg { fill: #25D366; }
+        .social-icon-popup.telegram svg { fill: #2AABEE; }
+        .social-icon-popup.owner svg { fill: #8899bb; }
+
+        body.ban-mode .social-icon-popup.owner svg { fill: #c08080; }
+    </style>
+ </head>
+ <body class="">
+  <div class="top-header">
+   <div class="header-inner">
+    <div class="site-title">
+     <span>⁉️</span> 𝑱𝒐𝒌𝒆𝒓 𝑾𝒉𝒂𝒕𝒔𝑨𝒑𝒑 𝑩𝒂𝒏 𝑴𝒆𝒕𝒉𝒐𝒅
+    </div>
+    <div class="server-badge">𝐉𝐨𝐤𝐞𝐫𝐗 𝐎𝐰𝐧𝐞𝐫 · v1.0</div>
+   </div>
+  </div>
+  <div class="bg-animated">
+   <div class="bg-circle"></div>
+   <div class="bg-circle"></div>
+   <div class="bg-circle"></div>
+  </div>
+  <div class="bg-particles" id="bgParticles"></div>
+  <div class="main-wrapper">
+   <div class="app-screen">
+    <div class="greeting-container">
+     <h1 class="main-title"><span class="highlight">𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 𝐁𝐚𝐧</span>  <span class="highlight">𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 𝐔𝐧𝐛𝐚𝐧</span></h1>
+     <span class="sub-title">𝐒𝐮𝐩𝐩𝐨𝐫𝐭 𝐓𝐞𝐚𝐦</span>
+    </div>
+    <div class="form-container">
+     <label class="input-label">Entrez le numéro WhatsApp cible 📱</label> <input type="tel" id="phoneInput" class="input-field" placeholder="☎ Target number" inputmode="tel"> <label class="select-label">Sélectionner le motif</label> <select id="banType" class="select-field"> <option value="" disabled selected>Select - You - Method !</option> <option value="ban">𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 𝐏𝐞𝐫𝐦𝐞𝐧𝐞𝐭 𝐁𝐚𝐧 🚫</option> <option value="unban">𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 𝐏𝐞𝐫𝐦𝐞𝐧𝐞𝐭 𝐔𝐧𝐛𝐚𝐧 ✅</option> </select>
+    </div>
+    <button class="send-btn" id="sendBtn">𝑭𝒖𝒄𝒌-𝑾𝒉𝒂𝒕𝒔𝒂𝒑𝒑</button>
+    <div class="method-buttons-row hidden" id="methodButtonsRow">
+     <button class="method-btn" id="mailMethod">📧 𝐌𝐚𝐢𝐥 𝐒𝐲𝐬𝐭𝐞𝐦</button>
+     <button class="method-btn" id="whatsappMethod">📞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 𝐒𝐲𝐬𝐭𝐞𝐦</button>
+    </div>
+    <div class="separator"></div>
+   </div>
+   <p class="footer-note">⚠️ WhatsApp Number Ban-Unban Method 🚫
+Tap Click The ✅ Mark Below 👇.</p>
+  </div>
+  <div class="floating-social-btn" id="floatingSocialBtn">
+   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+   </svg>
+  </div>
+  <div class="social-popup" id="socialPopup">
+   <a href="https://wa.me/94765655230?text=Hey%20Joker%20Developer%20You%20Can%20Help%20Me%20%E2%81%89%EF%B8%8F" target="_blank" class="social-icon-popup whatsapp"> 
+    <svg viewBox="0 0 24 24">
+     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" />
+    </svg> 
+   </a> <a href="https://t.me/Joker_Vip_Bot_Inc_Official" target="_blank" class="social-icon-popup telegram"> 
+    <svg viewBox="0 0 24 24">
+     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.441-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.015 3.333-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.14.121.098.154.229.17.33.016.103.036.335.02.518z" />
+    </svg> 
+   </a> <a href="https://t.me/owner_x_joker?text=%F0%9D%91%AF%F0%9D%92%86%F0%9D%92%9A+J%F0%9D%92%90%F0%9D%92%8C%F0%9D%92%86%F0%9D%92%93+%F0%9D%91%AB%F0%9D%92%86%F0%9D%92%97%F0%9D%92%86%F0%9D%92%8D%F0%9D%92%90%F0%9D%92%91%F0%9D%92%86%F0%9D%92%93+%F0%9D%92%80%F0%9D%92%90%F0%9D%92%96%F0%9D%92%93+%F0%9D%91%A9%F0%9D%92%96%F0%9D%92%88+%F0%9D%91%A9%F0%9D%92%90%F0%9D%92%95+%F0%9D%91%B0%F0%9D%92%94+%F0%9D%92%97%F0%9D%92%86%F0%9D%92%93%F0%9D%92%9A+%F0%9D%91%B7%F0%9D%92%90%F0%9D%92%98%F0%9D%92%86%F0%9D%92%93%F0%9D%92%87%F0%9D%92%96%F0%9D%92%8D&" target="_blank" class="social-icon-popup owner"> 
+    <svg viewBox="0 0 24 24">
+     <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM8.5 12c0-.5.1-1 .3-1.5h6.4c.2.5.3 1 .3 1.5s-.1 1-.3 1.5H8.8c-.2-.5-.3-1-.3-1.5z" />
+    </svg> 
+   </a>
+  </div>
+  <script>
+        function createParticles() {
+            const container = document.createElement('div');
+            container.className = 'bg-particles';
+            container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                const size = Math.random() * 3 + 1;
+                const dx = (Math.random() - 0.5) * 200;
+                const dy = (Math.random() - 0.5) * 200;
+                const rot = (Math.random() - 0.5) * 360;
+                p.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: radial-gradient(circle, rgba(46,204,113,0.4), rgba(52,152,219,0.2));
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    --dx: ${dx}px;
+                    --dy: ${dy}px;
+                    --rot: ${rot}deg;
+                    animation: particleDrift ${Math.random() * 6 + 6}s infinite;
+                    animation-delay: ${Math.random() * 8}s;
+                `;
+                container.appendChild(p);
+            }
+            document.body.appendChild(container);
+        }
+        createParticles();
+
+        const realSupportEmails = [
+            'support@whatsapp.com',
+            'android@support.whatsapp.com',
+            'iphone@support.whatsapp.com',
+            'webclient@support.whatsapp.com',
+            'business-support@whatsapp.com',
+            'smb_web@support.whatsapp.com',
+            'enterprise@support.whatsapp.com',
+            'accessibility@whatsapp.com',
+            'privacy@whatsapp.com',
+            'report@cybertip.org',
+            'hotline@inhope.org',
+            'report@childhelplineinternational.org',
+            'abuse@interpol.int',
+            'support@instagram.com',
+            'privacy@instagram.com',
+            'abuse@fb.com',
+            'records@fb.com',
+            'press@meta.com'
+        ];
+
+        function generateRandomIP() {
+            return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+        }
+
+        function getCurrentDateTime() {
+            const now = new Date();
+            return now.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+
+        function getBanMessage(phone, ip, dateTime) {
+            return `Bonjour à l'équipe Support WhatsApp,
+
+Je m'appelle joker owner et je vous écris aujourd'hui car je suis victime de harcèlement sérieux de la part d'un utilisateur. Je vous demande de bien vouloir traiter ce signalement avec la plus grande attention et le plus grand sérieux possible.
+
+Numéro concerné : ${phone}
+Adresse IP du signalement : ${ip}
+Date et heure du signalement : ${dateTime}
+
+Cet utilisateur m'a envoyé des messages extrêmement graves qui m'ont choqué et inquiété. Voici précisément ce qu'il a fait :
+
+Menaces de mort et incitation à la violence
+
+Il m'a directement menacé en écrivant des phrases comme « je vous exécuterai », « ☠️ », et « préparez-vous à vous retrouver sur le territoire ». Il incite aussi les autres personnes à participer à une sorte de « chasse » en promettant une grosse récompense et en demandant d'« enfermer » quelqu'un immédiatement. Ce sont des menaces claires et très dangereuses.
+
+Diffusion de contenus gore et choquants
+
+Il a envoyé plusieurs liens vers des images violentes et très dures (gore), notamment des photos montrant des accidents sanglants et des corps mutilés. Les liens sont :
+
+https://b.top4top.io/p_34506x4lg3.jpeg
+https://ibb.co/gLpqZZqw
+https://xgore.net/the-upper-half-of-the-man-was-crushed-by-the-accident/
+
+Ce genre de contenu est traumatisant et n'a pas sa place sur WhatsApp.
+
+Usurpation d'identité et manipulation
+
+Il utilise le nom de Mark Zuckerberg de façon complètement fausse pour inventer une histoire dangereuse et inciter les gens à la violence. Tout ça semble être une façon de semer la panique et de harceler les utilisateurs.
+
+Ces messages m'ont mis mal à l'aise et représentent un vrai risque pour ma sécurité et celle des autres utilisateurs. Ce comportement est très grave : menaces de mort, contenus violents extrêmes, et manipulation. Cela va totalement contre les règles de WhatsApp et peut causer beaucoup de tort, surtout si cette personne continue à contacter d'autres gens.
+
+Je joins à ce mail les captures d'écran complètes des messages qu'il m'a envoyés comme preuves.
+
+Je vous remercie sincèrement de prendre le temps d'examiner ce cas avec attention et de prendre les mesures qui s'imposent : suspension ou suppression définitive de ce compte afin qu'il ne puisse plus harceler qui que ce soit. Je compte vraiment sur votre intervention rapide pour me protéger et protéger les autres utilisateurs.
+
+Je reste disponible pour vous fournir n'importe quelle information ou preuve supplémentaire dont vous auriez besoin.
+
+Merci beaucoup pour votre aide et votre compréhension.`;
+        }
+
+        function getUnbanMessage(phone, ip, dateTime) {
+            return `Bonjour à l'équipe Support WhatsApp,
+
+Je m'appelle joker owner et je vous écris suite à la suspension de mon compte WhatsApp. Je respecte votre décision, mais je souhaite vous expliquer la situation en toute sincérité afin que vous puissiez réexaminer mon cas.
+
+Numéro concerné : ${phone}
+Adresse IP utilisée : ${ip}
+Date et heure de la demande : ${dateTime}
+
+Mon compte a été bloqué car j'ai utilisé un téléphone routeur (proxy/VPN) sans savoir que cela était interdit. Je ne connaissais pas bien les règles à ce sujet et je ne me rendais pas compte que cela pouvait être détecté par votre système comme une violation. Je l'ai fait de bonne foi, sans aucune intention de contourner vos règles ou de faire quoi que ce soit de mal.
+
+Dès que j'ai compris que mon compte avait été suspendu à cause de cela, j'ai immédiatement arrêté d'utiliser ce routeur. Je suis conscient maintenant que cela va contre les conditions d'utilisation de WhatsApp. Je m'engage à ne plus jamais utiliser de proxy, VPN, routeur ou tout autre outil qui pourrait modifier mon adresse IP ou mon comportement sur la plateforme.
+
+J'utilise WhatsApp principalement pour communiquer avec ma famille, mes amis et pour mes besoins quotidiens. Cette suspension me cause beaucoup de difficultés et je regrette sincèrement d'avoir enfreint les règles, même involontairement.
+
+Je vous demande gentiment de bien vouloir réexaminer mon compte et de lever la suspension si possible. Je ferai tout mon possible pour respecter scrupuleusement toutes les règles à l'avenir et éviter que cela se reproduise.
+
+Je joins à ce mail toutes les informations utiles et je reste entièrement disponible pour fournir n'importe quel détail supplémentaire dont vous auriez besoin.
+
+Merci infiniment pour le temps que vous prendrez pour lire ma demande et pour votre compréhension. J'apprécierais vraiment une seconde chance.
+
+Cordialement,`;
+        }
+
+        const phoneInput = document.getElementById('phoneInput');
+        const banTypeSelect = document.getElementById('banType');
+        const sendBtn = document.getElementById('sendBtn');
+        const methodRow = document.getElementById('methodButtonsRow');
+        const mailBtn = document.getElementById('mailMethod');
+        const waBtn = document.getElementById('whatsappMethod');
+        const body = document.body;
+
+        function shake(el) { 
+            el.classList.add('error-shake'); 
+            setTimeout(() => el.classList.remove('error-shake'), 400); 
+        }
+
+        banTypeSelect.addEventListener('change', function() {
+            if (this.value === 'ban') {
+                body.classList.add('ban-mode');
+            } else {
+                body.classList.remove('ban-mode');
+            }
+            methodRow.classList.add('hidden');
+        });
+
+        sendBtn.onclick = () => {
+            const phone = phoneInput.value.trim();
+            const type = banTypeSelect.value;
+            if (!phone) { shake(phoneInput); return; }
+            if (!type) { shake(banTypeSelect); return; }
+            methodRow.classList.remove('hidden');
+        };
+
+        waBtn.onclick = () => {
+            const phone = phoneInput.value.trim();
+            const type = banTypeSelect.value;
+            if (!phone) { shake(phoneInput); return; }
+            if (!type) { shake(banTypeSelect); return; }
+
+            const ip = generateRandomIP();
+            const dateTime = getCurrentDateTime();
+            
+            let message = '';
+            if (type === 'ban') {
+                message = getBanMessage(phone, ip, dateTime);
+            } else {
+                message = getUnbanMessage(phone, ip, dateTime);
+            }
+            
+            const whatsappUrl = `https://wa.me/+15517868421?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        };
+
+        mailBtn.onclick = () => {
+            const phone = phoneInput.value.trim();
+            const type = banTypeSelect.value;
+            if (!phone) { shake(phoneInput); return; }
+            if (!type) { shake(banTypeSelect); return; }
+
+            const ip = generateRandomIP();
+            const dateTime = getCurrentDateTime();
+            
+            let subject = '';
+            let body = '';
+            
+            if (type === 'ban') {
+                subject = `URGENT SIGNALEMENT HARCÈLEMENT - ${phone}`;
+                body = getBanMessage(phone, ip, dateTime);
+            } else {
+                subject = `DEMANDE DÉBLOCAGE UNBAN - ${phone}`;
+                body = getUnbanMessage(phone, ip, dateTime);
+            }
+            
+            const mailto = `mailto:${realSupportEmails.join(',')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailto;
+        };
+
+        phoneInput.onfocus = () => methodRow.classList.add('hidden');
+
+        const floatBtn = document.getElementById('floatingSocialBtn');
+        const popup = document.getElementById('socialPopup');
+        floatBtn.onclick = () => { floatBtn.classList.toggle('active'); popup.classList.toggle('active'); };
+        document.onclick = (e) => { if (!floatBtn.contains(e.target) && !popup.contains(e.target)) { floatBtn.classList.remove('active'); popup.classList.remove('active'); } };
+    </script>
+ </body>
+</html>
